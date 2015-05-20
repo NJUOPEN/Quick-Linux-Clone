@@ -1,0 +1,7 @@
+landscape-client-ui-install
+gnome-mahjongg
+unity-scope-gdrive
+empathy
+unity-webapps-common
+intel-microcode
+iucode-tool
