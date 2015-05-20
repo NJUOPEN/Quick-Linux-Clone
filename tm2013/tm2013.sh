@@ -66,6 +66,16 @@ function check_firstrun
     fi	
 }
 
+function check_exist
+{
+    local PID
+    PID=$(ps -C TXPlatform.exe -o pid= || exit 0)    #'exit 0' is to suppress non-zero return value
+    if [ -n "$PID" ]
+    then    #If there is already another TM running, kill it
+        kill $PID
+    fi    
+}
+
 function runapp
 {
     if [ -e "$WINE_DIR/bin/wine" ];then
@@ -73,6 +83,7 @@ function runapp
 	if [ -e "$WINEPREFIX_DIR/drive_c/Program Files/Tencent/tm2013/Bin/TM.exe"  ];then
 	    check_owner
 	    check_firstrun
+	    check_exist	    
 	    WINEDEBUG=-all env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/wine  $WINEPREFIX_DIR/drive_c/Program\ Files/Tencent/tm2013/Bin/TM.exe
 
 	else
