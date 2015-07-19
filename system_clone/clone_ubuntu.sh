@@ -1,5 +1,20 @@
 #!/bin/bash
 #The following command should be run as root
+#Note: 
+#   1.Here we assume the file name begins with 'xxxN', where 'xxx' can be sda/hdb/fdc/etc.,
+#     and 'N' is a SINGLE digit;
+#   2.The .deb files of clonezilla is assumed to stored together with source images, under the
+#     root of specified parition.
+
+#Show warnings
+echo
+echo "Notice: You should run this script as root"
+echo "If not, press Ctrl+C to terminate and re-run it with 'sudo'."
+echo
+echo "***** Inproper opertaion may cause lose of data! *****"
+echo "Press any key to continue..."
+read choice
+
 
 #Prompt to run gparted before clonezilla
 echo
@@ -30,8 +45,15 @@ mount /dev/$source_part /home/partimag
 if [ -z "$(dpkg -l | grep clonezilla)" ]
 then
     #Install .deb package of clonezilla
-    cd /home/partimag/clonezilla-deb
-    dpkg -i *.deb
+    cd /home/partimag/clonezilla-deb    
+    if uname -a | grep "i.86" > /dev/null 2>&1 || uname -a | grep -i "ia32" > /dev/null 2>&1
+    then
+        #32-bit system
+        dpkg -i *86.deb *_all.deb
+    else
+        #64-bit system
+        dpkg -i *64.deb *_all.deb
+    fi
 fi
 
 
@@ -86,6 +108,10 @@ mv $old_image_name $new_image_name
 #Launch the programme
 #clonezilla
 /usr/sbin/ocs-sr -e1 auto -e2 -c -t -r -j2 -k -p true restoreparts $image_name $target_part
+
+#Restore old name for the image file
+mv $new_image_name $old_image_name
+
 
 #Install grub to new disk if needed
 echo
