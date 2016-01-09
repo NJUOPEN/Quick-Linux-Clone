@@ -1,5 +1,8 @@
 #!/bin/bash
 #The following command should be run as root
+#Note: 
+#   1.The .deb files of clonezilla is assumed to stored together with source images, under the
+#     root of specified parition.
 
 #Input the source partition which contains the image
 echo
@@ -20,9 +23,16 @@ mount /dev/$source_part /home/partimag
 #Check if clonezilla has already been installed
 if [ -z "$(dpkg -l | grep clonezilla)" ]
 then
-	#Install .deb package of clonezilla
-	cd /home/partimag/clonezilla-deb
-	dpkg -i *.deb
+    #Install .deb package of clonezilla
+    cd /home/partimag/clonezilla-deb    
+    if uname -a | grep "i.86" > /dev/null 2>&1 || uname -a | grep -i "ia32" > /dev/null 2>&1
+    then
+        #32-bit system
+        dpkg -i *86.deb *_all.deb
+    else
+        #64-bit system
+        dpkg -i *64.deb *_all.deb
+    fi
 fi
 
 
@@ -48,6 +58,13 @@ then
 fi
 
 
-#Launch the programme
-#clonezilla
+#Launch the program - partclone
 /usr/sbin/ocs-sr -q2 -c -j2 -z1p -i 10000 -p true saveparts $image_name $target_part
+
+
+#Clean up
+umount /dev/$target_part
+
+echo
+echo "Preparation finished! "
+echo

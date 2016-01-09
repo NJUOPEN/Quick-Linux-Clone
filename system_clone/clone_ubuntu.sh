@@ -1,8 +1,8 @@
 #!/bin/bash
 #The following command should be run as root
 #Note: 
-#   1.Here we assume the file name begins with 'xxxN', where 'xxx' can be sda/hdb/fdc/etc.,
-#     and 'N' is a SINGLE digit;
+#   1.Here we assume the image name begins with 'xxxN', where 'xxx' can be sda/hdb/fdc/etc.,
+#     and 'N' is the partition number;
 #   2.The .deb files of clonezilla is assumed to stored together with source images, under the
 #     root of specified parition.
 
@@ -100,13 +100,11 @@ cd /home/partimag/$image_name
 
 #And rename the image file
 old_image_name="$(ls *.gz.aa)"
-suffix=${old_image_name:4}
-new_image_name=$target_part$suffix
+new_image_name=$target_part.${old_image_name#*.}
 mv $old_image_name $new_image_name
 
 
-#Launch the programme
-#clonezilla
+#Launch the program - partclone
 /usr/sbin/ocs-sr -e1 auto -e2 -c -t -r -j2 -k -p true restoreparts $image_name $target_part
 
 #Restore old name for the image file
