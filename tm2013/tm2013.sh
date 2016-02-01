@@ -6,7 +6,7 @@ export LANG=zh_CN.utf8
 #Longene Dir
 LONGENE_DIR=/opt/longene
 #Wine Program Main Dir
-WINE_DIR=$LONGENE_DIR/tm2013/wine-lib
+WINE_DIR=/usr
 #WINPREFIX Dir
 WINEPREFIX_DIR=$HOME/.longene/tm2013
 #Wine APP Dir

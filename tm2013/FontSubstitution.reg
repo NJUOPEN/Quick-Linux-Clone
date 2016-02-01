@@ -1,0 +1,10 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Fonts]
+"WenQuanYi"="Z:\\usr\\share\\fonts\\truetype\\wqy\\wqy-microhei.ttc"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontSubstitutes]
+"MS Shell Dlg"="WenQuanYi"
+"SimSun"="WenQuanYi"
+"Tahoma"="WenQuanYi"
+
