@@ -71,7 +71,7 @@ function check_firstrun
 		mkdir $HOME/.wine-qq
 	fi
 	local msi_file
-	msi_file=$(ls $HOME/.cache/wine/wine_gecko*.msi)
+	msi_file=$(ls $HOME/.cache/wine/wine_gecko*.msi || exit 0)
 	if [ -n "$msi_file" ];then
 		env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/wine msiexec /i $msi_file
 	fi
