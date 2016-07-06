@@ -73,7 +73,14 @@ function check_firstrun
 	local msi_file
 	msi_file=$(ls $HOME/.cache/wine/wine_gecko*.msi || exit 0)
 	if [ -n "$msi_file" ];then
-		env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/wine msiexec /i $msi_file
+		env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/wine msiexec /i $msi_file || true
+	else
+		msi_file=$(ls /usr/share/wine/gecko/wine_gecko*.msi || exit 0)
+		if [ -n "$msi_file" ];then
+			env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/wine msiexec /i $msi_file || true
+		else
+			echo "* Cannot found msi installer of wine-gecko."
+		fi
 	fi
 	echo "Bingoo" >$WINEPREFIX_DIR/firstrun
     fi	
@@ -81,12 +88,9 @@ function check_firstrun
 
 function check_exist
 {
-    local PID
-    PID=$(ps -C TXPlatform.exe -o pid= || exit 0)    #'exit 0' is to suppress non-zero return value
-    if [ -n "$PID" ]
-    then    #If there is already another QQ running, kill it
-        kill $PID
-    fi
+    #If there is already another QQ running, kill its child process
+    killall TXPlatform.exe > /dev/null 2>&1 || true
+    killall QQUrlMgr.exe > /dev/null 2>&1 || true
 }
 
 function runapp

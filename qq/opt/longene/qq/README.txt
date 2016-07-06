@@ -16,7 +16,11 @@ wineserver(>=1.8.0), in order to provide better compartibility.
 
 * Replace tm2013 with QQ6.9
 
-* Remove unneeded drivers and executable 
+* Remove unneeded drivers and executable
+
+* Remove pre-installed gecko, and try to use cacheed MSI file
+
+* Set system environment as "Windows 2008"
 
 
 ## Licence
