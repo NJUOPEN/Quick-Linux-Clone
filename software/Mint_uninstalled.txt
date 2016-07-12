@@ -1,0 +1,7 @@
+brasero
+firefox-locale-en
+hexchat
+pix
+simple-scan
+thunderbird
+thunderbird-gnome-support
