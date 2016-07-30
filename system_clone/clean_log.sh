@@ -79,6 +79,18 @@ rm -R thumbnails
 rm upstart/*
 rm -R webkit/*
 
+
+# Clean root log
+cd $ROOT_DIR/root
+rm -R .bash_history
+rm -R .nano
+rm -R .synaptic
+
+# Clean root cache
+rm -R .aptitude
+rm -R .cache
+
+
 # Clean tmp
 cd $ROOT_DIR/tmp
 rm -R *
